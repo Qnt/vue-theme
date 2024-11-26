@@ -7,6 +7,53 @@
     <link rel="stylesheet" href="theme.css" />
   </head>
   <body>
-
+    <div class="container" id="app">
+      <div class="card">
+        <h1
+          :style="{
+          color: inputValue.length < 5 ? 'darkred' : 'darkblue',
+          fontSize: inputValue.length < 5 ? '2rem' : '1.5rem',
+        }"
+        >
+          {{title}}
+        </h1>
+        <div class="form-control">
+          <input
+            type="text"
+            :placeholder="placeholderString"
+            v-model="inputValue"
+            @keypress.enter="addNewNote"
+          />
+        </div>
+        <button class="btn" @click="addNewNote">Add</button>
+        <hr />
+        <ul class="list" v-if="notes.length">
+          <li class="list-item" key="id" v-for="{id, text} in notes">
+            <!-- <span :class="text.length > 5 ? 'primary': 'bold'"
+              >({{id}}) {{toUpperCase(text)}}</span
+            > -->
+            <!-- <span
+              :class="{
+              'primary': text.length > 5,
+              'bold': text.length <= 5,
+            }"
+              >({{id}}) {{toUpperCase(text)}}</span
+            > -->
+            <span :class="['bold', {'primary': text.length > 5}]"
+              >({{id}}) {{toUpperCase(text)}}</span
+            >
+            <button class="btn danger" @click="deleteNote(id)">Delete</button>
+          </li>
+          <hr />
+          <li>
+            <strong>Total: {{notes.length}}</strong> | Doubled: {{
+            doubleCountComputed }}
+          </li>
+        </ul>
+        <div v-else>Empty</div>
+      </div>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="./app.js"></script>
   </body>
 </html>
